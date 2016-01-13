@@ -14,7 +14,7 @@ class CubesGeneratorTests(unittest.TestCase):
         c = iter(cubes())
         for i in range(1, 1001):
             value = next(c)
-            self.assertEqual(c, i ** 3)
+            self.assertEqual(value, i ** 3)
 
 
 class PrimesGeneratorTests(unittest.TestCase):
@@ -45,8 +45,9 @@ class FibanacciGeneratorTests(unittest.TestCase):
             data = json.load(file)
 
         f = iter(fibonacci())
-        for fibonacci in data:
-            self.assertEqual(next(f), fibonacci)
+        for n in data:
+            #value = next(f)
+            self.assertEqual(next(f), n)
 
 
 class AlphabetGeneratorTests(unittest.TestCase):

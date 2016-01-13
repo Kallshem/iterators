@@ -1,5 +1,5 @@
 """Övningar på iterators"""
-
+from math import sqrt
 
 class Cubes():
     """En iterator som skapar en serie med kuber (i ** 3).
@@ -10,8 +10,31 @@ class Cubes():
     Talserien ska inte ha något slut.
 
     """
-    pass
+    def __init__(self):
+        self.n = 0        
 
+    def cube(x):
+        return (x ** 3)
+
+    def __next__(self):
+        self.n += 1
+        return Cubes.cube(self.n)
+
+    def __iter__(self):
+        return self
+
+
+# class CubesDeluxe():
+#     class SuperCube():
+#         def __init__(self):
+#             self.i = 0
+
+#         def __next__(self):
+#             self.i += 1
+#             return self.i
+
+#     def __iter__(self):
+#         return CubesDeluxe.SuperCube()
 
 class Primes():
     """En iterator som returnerar primtal.
@@ -19,7 +42,29 @@ class Primes():
     Talserien som förväntas börjar alltså: 2, 3, 5, 7, 11, 13, 17, 19, 23, ...
 
     """
-    pass
+    
+    def __init__(self):
+        self.n = 1
+        
+
+
+    @staticmethod
+    def _prime(x):
+        for i in range(2, int(sqrt(x)) + 1):
+            if x % i == 0:
+                return False
+        return True
+
+    def __next__(self):
+        while True:
+            self.n += 1
+            if Primes._prime(self.n):
+                return self.n
+        
+
+    def __iter__(self):
+        return self
+
 
 
 class Fibonacci():
@@ -31,7 +76,22 @@ class Fibonacci():
     Alltså börjar serien: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, ...
 
     """
-    pass
+    def __init__(self):
+        self.first = None
+        self.second = -1
+        self.sum = 1
+
+    def fibcci(self):
+        self.sum = self.first + self.second        
+        return self.sum
+
+    def __next__(self):
+        self.first = self.second
+        self.second = self.sum
+        return Fibonacci.fibcci(self)
+
+    def __iter__(self):
+        return self
 
 
 class Alphabet():
@@ -44,14 +104,30 @@ class Alphabet():
     Nun, Samekh, Ayin, Pe, Tsadi, Qof, Resh, Shin, Tav
 
     """
+    def __init__(self):
+        self.x = -1
+    
+    def abc(x):
+        alph = ["Alef", "Bet", "Gimel", "Dalet", "He", "Vav", "Zayin", "Het", "Tet", "Yod", "Kaf", "Lamed", "Mem", "Nun", "Samekh", "Ayin", "Pe", "Tsadi", "Qof", "Resh", "Shin", "Tav"]
+        return alph[x]
 
+    def __next__(self):
+        self.x += 1
+        if self.x < 22:
+            return Alphabet.abc(self.x)
+        else:
+            raise StopIteration
 
+    def __iter__(self):
+        return self
+        
 class Permutations():
     """En iterator som returnerar alla permutationer av en inmatad sträng.
 
     Då strängen 'abc' matas in fås: 'abc', 'acb', 'bac', 'bca', 'cba', 'cab'
     """
     pass
+
 
 
 class LookAndSay():
@@ -66,4 +142,9 @@ class LookAndSay():
     1211 läses 'en etta, en tvåa, två ettor', alltså 111221
     111221 läses 'tre ettor, två tvåor, en etta', alltså 312211
     """
-    pass
+
+    def __init__(self):
+        pass
+
+
+        
