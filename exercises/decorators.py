@@ -9,13 +9,21 @@ def memoize(f):
     Detta är den enklaste typen av cache som helt enkelt lagrar alla returvärden
     för de anropsvärden som används.
     """
-    global memo
-    memo = list()
+    #global memo
+    memo = dict()
     
     @wraps(f)
-    def nsa():
-        value = "{}: {}".format(f.__name__, f())
-        memo.append(value)
+    def nsa(*args, **kwargs):
+#        value = "{}: {}".format(f.__name__, f())
+#        memo.append(value)
+        try:
+            print('Searching for memoized value...')
+            return memo[(args, tuple(sorted(kwargs.items())))]
+        except KeyError:
+            print('Calculating and storing value.')
+            value = f(*args, **kwargs)
+            memo[(args, tuple(sorted(kwargs.items())))] = value
+            return value
     
     return nsa
     
@@ -57,10 +65,18 @@ def rovarsprak(f):
     
     return change
         
-@rovarsprak
+@memoize
 def hej(x):
     return x
 
 @memoize
 def test_fun():
     return 'testord'
+
+
+#def min_funk(x, y, z, option = None):
+def min_funk(*args, **kwargs):
+    print(args)
+    print(tuple(sorted(kwargs.items())))
+
+#min_funk(5, 7, 11, option = 'abc')
